@@ -1,0 +1,4 @@
+class Config:
+    DO_USE_JOKER_RULE = True
+    DO_USE_JOKER_RULE_UPPER_SECTION = True
+    DO_USE_YAHTZEE_BONUS = True
