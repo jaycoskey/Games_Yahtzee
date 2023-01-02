@@ -22,6 +22,18 @@ class Box(IntEnum):
     CHANCE         = 13  # C
 
     @staticmethod
+    def from_code(s):
+        mapping = {'B1': Box.ACES,  'B2': Box.TWOS,  'B3': Box.THREES,
+                'B4': Box.FOURS, 'B5': Box.FIVES, 'B6': Box.SIXES,
+                'K3': Box.KIND3, 'K4': Box.KIND4, 'FH': Box.FULL_HOUSE,
+                'SS': Box.STRAIGHT_SMALL, 'LS': Box.STRAIGHT_LARGE,
+                'Y':  Box.YAHTZEE, 'C': Box.CHANCE}
+        if s in mapping:
+            return mapping[s]
+        else:
+            return Box.NONE
+
+    @staticmethod
     def nonnone_count():
         return len(Box) - 1
 

@@ -5,7 +5,7 @@ import signal
 from statistics import mean
 import sys
 
-# from player_human import Player_Human
+from player_human import Player_Human
 from player_bot import Player_NoRerolls_Random
 
 
@@ -31,6 +31,12 @@ class GameSequence:
         return self.game_scores
 
 
+def play_human(game_count=2):
+    games = GameSequence(Player_Human())
+    scores = games.play(game_count)
+    print(f'Mean Human Player score = {mean(scores)}')
+
+
 def play_random(game_count=2):
     games = GameSequence(Player_NoRerolls_Random())
     scores = games.play(game_count)
@@ -44,13 +50,13 @@ def main():
     parser.add_argument('-n', '--number', type=int, default=10)  # Number of games
 
     group = parser.add_mutually_exclusive_group(required=True)
-    # group.add_argument('-h', '--human', action='store_true')   # Interactive mode with Human Player
+    group.add_argument('-h', '--human', action='store_true')     # Interactive mode with Human Player
     group.add_argument('-r', '--random', action='store_true')    # Random Player
 
     args = parser.parse_args()
 
-    # if args.human:
-    #     play_human(args.number)
+    if args.human:
+        play_human(args.number)
     if args.random:
         play_random(args.number)
     else:
