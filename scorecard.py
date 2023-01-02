@@ -127,7 +127,7 @@ class Scorecard:
             return self.box_score[n] if self.is_box_used[n] else ''
 
         score_upper_raw = self.get_score_upper_raw()
-        score_upper_bonus = Scorecard.UPPER_BONUS if upper_score >= Scorecard.UPPER_THRESHOLD else 0
+        score_upper_bonus = Scorecard.UPPER_BONUS if score_upper_raw >= Scorecard.UPPER_THRESHOLD else 0
 
         text = (f'==========================\n'
                 f'  Upper Section   | Score\n'
