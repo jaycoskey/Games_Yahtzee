@@ -6,6 +6,12 @@ A repo for exploring player implementations related to the game of Yahtzee.
 Specifically: random, human, Monte Carlo, and (deep) reinforcement learning
 players.
 
+## How to run:
+  * To have the Random Player play 100 games: 
+```
+    % ./yahtzee.py --random -n 100
+```
+
 ## TODO-Players:
   * Implement human player.
   * Implement greedy player, without re-rolls.
