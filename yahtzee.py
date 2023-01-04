@@ -6,6 +6,8 @@ from statistics import mean
 import sys
 
 from player_human import Player_Human
+from player_bot import Player_MonteCarlo_Slow
+from player_bot import Player_NoRerolls_Greedy
 from player_bot import Player_NoRerolls_Random
 
 
@@ -31,10 +33,22 @@ class GameSequence:
         return self.game_scores
 
 
+def play_greedy(game_count=2):
+    games = GameSequence(Player_NoRerolls_Greedy())
+    scores = games.play(game_count)
+    print(f'Mean Greedy Player score = {mean(scores)}')
+
+
 def play_human(game_count=2):
     games = GameSequence(Player_Human())
     scores = games.play(game_count)
     print(f'Mean Human Player score = {mean(scores)}')
+
+
+def play_monte_carlo_slow(game_count=2):
+    games = GameSequence(Player_MonteCarlo_Slow())
+    scores = games.play(game_count)
+    print(f'Mean Monte Carlo Player (slow) score = {mean(scores)}')
 
 
 def play_random(game_count=2):
@@ -50,14 +64,20 @@ def main():
     parser.add_argument('-n', '--number', type=int, default=10)  # Number of games
 
     group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-g', '--greedy', action='store_true')    # Greedy Player
     group.add_argument('-h', '--human', action='store_true')     # Interactive mode with Human Player
     group.add_argument('-r', '--random', action='store_true')    # Random Player
+    group.add_argument('-s', '--slow', action='store_true')      # Monte Carlo Player (slow)
 
     args = parser.parse_args()
 
-    if args.human:
+    if args.greedy:
+        play_greedy(args.number)
+    elif args.human:
         play_human(args.number)
-    if args.random:
+    elif args.slow:
+        play_monte_carlo_slow(args.number)
+    elif args.random:
         play_random(args.number)
     else:
         raise RuntimeError(f'Program failed to catch missing mandatory flag specifying which Player type to use.')

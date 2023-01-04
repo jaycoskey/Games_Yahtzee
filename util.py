@@ -8,6 +8,21 @@ class LongestConsecutiveSequence:
     min: int
     length: int
 
+    def contains(self, x):
+        return self.min <= x <= self.max
+
+    def distance(self, x):
+        if self.min <= x <= self.max:
+            return 0
+        elif x < self.min:
+            return self.min - x
+        else:  # self.max < x
+            return x - self.max
+
+    @property
+    def max(self):
+        return self.min + self.length - 1
+
     def tup(self):
         return (self.min, self.length)
 
