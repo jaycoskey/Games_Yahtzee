@@ -96,17 +96,21 @@ class Scorecard:
         return (score, is_yahtzee)
 
     def get_boxes_unused(self):
-        return [b for b in Box if b != Box.NONE and not self.is_box_used[b.to_index()]]
+        return [b for b in Box
+                if b != Box.NONE and not self.is_box_used[b.to_index()]]
 
     def get_random_unused_box(self):
         return r.choice(self.get_boxes_unused())
 
     def get_score(self):
         score_upper_raw = self.get_score_upper_raw()
-        score_upper_bonus = Scorecard.UPPER_BONUS if score_upper_raw >= Scorecard.UPPER_THRESHOLD else 0
+        score_upper_bonus = (Scorecard.UPPER_BONUS
+                             if score_upper_raw >= Scorecard.UPPER_THRESHOLD
+                             else 0)
         score_lower_raw = self.box_score[6:14].sum()
         yahtzee_bonus = Scorecard.YAHTZEE_BONUS * self.yahtzee_bonus_count
-        score = score_upper_raw + score_upper_bonus + score_lower_raw + yahtzee_bonus
+        score = (score_upper_raw + score_upper_bonus
+                    + score_lower_raw + yahtzee_bonus)
         return score
 
     def get_score_upper_raw(self):
@@ -173,6 +177,6 @@ class Scorecard:
         self.box_score[box.to_index()] = score
         self.is_box_used[box.to_index()] = True
         if (Config.DO_USE_YAHTZEE_BONUS
-                and self.box_score[Box.YAHTZEE] > 0
+                and self.box_score[Box.YAHTZEE.to_index()] > 0
                 and is_yahtzee):
             self.yahtzee_bonus_count += 1
