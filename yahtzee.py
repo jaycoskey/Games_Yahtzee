@@ -6,6 +6,7 @@ from statistics import mean
 import sys
 
 from player_human import Player_Human
+from player_bot import Player_MonteCarlo_Fast
 from player_bot import Player_MonteCarlo_Slow
 from player_bot import Player_NoRerolls_Greedy
 from player_bot import Player_NoRerolls_Random
@@ -45,6 +46,12 @@ def play_human(game_count=2):
     print(f'Mean Human Player score = {mean(scores)}')
 
 
+def play_monte_carlo_fast(game_count=2):
+    games = GameSequence(Player_MonteCarlo_Fast())
+    scores = games.play(game_count)
+    print(f'Mean Monte Carlo Player (fast) score = {mean(scores)}')
+
+
 def play_monte_carlo_slow(game_count=2):
     games = GameSequence(Player_MonteCarlo_Slow())
     scores = games.play(game_count)
@@ -61,9 +68,10 @@ def main():
     parser = argparse.ArgumentParser(prog = 'Yahtzee',
                  description = 'Play the game Yahtzee',
                  add_help=False)
-    parser.add_argument('-n', '--number', type=int, default=10)  # Number of games
+    parser.add_argument('-n', '--number', type=int, default=2)  # Number of games
 
     group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('-f', '--fast', action='store_true')      # Monte Carlo Player (fast)
     group.add_argument('-g', '--greedy', action='store_true')    # Greedy Player
     group.add_argument('-h', '--human', action='store_true')     # Interactive mode with Human Player
     group.add_argument('-r', '--random', action='store_true')    # Random Player
@@ -71,7 +79,9 @@ def main():
 
     args = parser.parse_args()
 
-    if args.greedy:
+    if args.fast:
+        play_monte_carlo_fast(args.number)
+    elif args.greedy:
         play_greedy(args.number)
     elif args.human:
         play_human(args.number)
@@ -80,7 +90,8 @@ def main():
     elif args.random:
         play_random(args.number)
     else:
-        raise RuntimeError(f'Program failed to catch missing mandatory flag specifying which Player type to use.')
+        raise RuntimeError(f'Program failed to catch missing mandatory flag '
+                            'specifying which Player type to use.')
 
 
 if __name__ == '__main__':

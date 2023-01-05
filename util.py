@@ -29,6 +29,16 @@ class LongestConsecutiveSequence:
 
 class Util:
     @staticmethod
+    def reverse(xs):
+        return xs[::-1]
+
+    @staticmethod
+    def init_static(cls):
+        assert(getattr(cls, '_init_static'))
+        cls._init_static()
+        return cls
+
+    @staticmethod
     def longest_consecutive_sequence(items)->LongestConsecutiveSequence:
         """Returns an instance of LongestConsecutiveSequence.
         In the event of multiple sequences of the same length, it returns the first one.

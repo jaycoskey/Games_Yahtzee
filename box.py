@@ -34,6 +34,10 @@ class Box(IntEnum):
             return Box.NONE
 
     @staticmethod
+    def nonnone_boxes():
+        return [b for b in Box if b != Box.NONE]
+
+    @staticmethod
     def nonnone_count():
         return len(Box) - 1
 
